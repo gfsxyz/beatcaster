@@ -26,11 +26,37 @@ jobs:
       - name: Deploy to Server
         run: |
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
-            cd /var/www/beatcaster
+            # --- Step 1: Navigate to project directory ---
+            echo "--> Navigating to project directory..."
+            cd /var/www/beatcaster || exit 1
+            pwd
+            
+            # --- Step 2: Pull latest code from Git ---
+            echo "--> Pulling latest code..."
             git pull
+            
+            # --- Step 3: Install dependencies ---
+            echo "--> Installing NPM dependencies..."
             npm install
+            
+            # --- Step 4: Deleting old build cache ---
+            echo "--> Deleting old .next folder..."
             rm -rf .next
+            ls -l | grep .next || echo ".next directory not found, which is good."
+            
+            # --- Step 5: Building the application ---
+            echo "--> Building Next.js application..."
             npm run build
+            
+            # --- Step 6: Checking new build output ---
+            echo "--> Listing contents of new .next folder..."
+            ls -lh .next/
+            
+            # --- Step 7: Restarting the application service ---
+            echo "--> Restarting beatcaster.service..."
             sudo systemctl restart beatcaster.service
-            echo "Deployment complete!"
+            sleep 5 # Wait 5 seconds for the service to stabilize
+            sudo systemctl status beatcaster.service
+            
+            echo "--> DEPLOYMENT SCRIPT FINISHED <--"
           EOF
