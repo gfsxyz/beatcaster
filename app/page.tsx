@@ -7,7 +7,7 @@ export default function Home() {
       <div className="text-center max-w-4xl mx-auto z-10">
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight">
           Never let your viewers ask <br />
-          <span className="text-purple-400">
+          <span className="text-emerald-400">
             &#34;what song is this?&#34;
           </span>{" "}
           again.
@@ -20,7 +20,7 @@ export default function Home() {
         <div className="mt-8 flex flex-wrap justify-center gap-4">
           <a
             href="#getting-started"
-            className="inline-flex items-center justify-center rounded-md bg-purple-600 px-8 py-3 text-sm font-medium text-white shadow-lg transition-colors hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+            className="inline-flex items-center justify-center rounded-md bg-emerald-600 px-8 py-3 text-sm font-medium text-white shadow-lg transition-colors hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900"
           >
             Get Started - It&apos;s Free
           </a>
