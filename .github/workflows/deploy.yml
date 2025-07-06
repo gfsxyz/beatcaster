@@ -29,6 +29,7 @@ jobs:
             cd /var/www/beatcaster
             git pull
             npm install
+            rm -rf .next
             npm run build
             sudo systemctl restart beatcaster.service
             echo "Deployment complete!"
