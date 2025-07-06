@@ -5,7 +5,6 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-4 overflow-hidden">
       <div className="text-center max-w-4xl mx-auto z-10">
-        <div className="text-4xl text-rose-500">TEST CI CD</div>
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight">
           Never let your viewers ask <br />
           <span className="text-emerald-400">
