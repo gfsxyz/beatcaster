@@ -1,9 +1,10 @@
-import { MicVocal } from "lucide-react";
+import SpotifyLoginButton from "@/components/SpotifyLoginButton";
+import { BarChart } from "lucide-react";
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-4 overflow-hidden">
+    <main className="flex flex-col items-center justify-center min-h-screen p-4 overflow-hidden bg-neutral-100">
       <div className="text-center max-w-4xl mx-auto z-10">
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight">
           Never let your viewers ask <br />
@@ -12,24 +13,13 @@ export default function Home() {
           </span>{" "}
           again.
         </h1>
-        <p className="mt-6 text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">
+        <p className="mt-6 text-lg md:text-xl text-neutral-700 max-w-2xl mx-auto">
           Beatcaster effortlessly displays your currently playing Spotify song
           as a stylish, customizable overlay for your OBS streams and
           recordings. No more typing song names in chat!
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-4">
-          <a
-            href="#getting-started"
-            className="inline-flex items-center justify-center rounded-md bg-emerald-600 px-8 py-3 text-sm font-medium text-white shadow-lg transition-colors hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-gray-900"
-          >
-            Get Started - It&apos;s Free
-          </a>
-          <a
-            href="#learn-more"
-            className="inline-flex items-center justify-center rounded-md border border-gray-600 bg-transparent px-8 py-3 text-sm font-medium text-white shadow-sm transition-colors hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-900"
-          >
-            View on GitHub
-          </a>
+          <SpotifyLoginButton label="Get Started - It's Free" />
         </div>
       </div>
 
@@ -37,9 +27,9 @@ export default function Home() {
         <p className="text-center text-sm text-gray-500 mb-2">
           - Example Overlay -
         </p>
-        <div className="relative rounded-lg border border-gray-700 bg-gray-800/50 p-4 shadow-2xl backdrop-blur-sm">
+        <div className="relative rounded-lg border border-gray-300 bg-gray-300/50 p-4 shadow-2xl backdrop-blur-sm">
           <div className="flex items-center gap-4">
-            <div className="h-16 w-16 rounded-md bg-gray-700 flex-shrink-0">
+            <div className="h-16 w-16 rounded-md bg-gray-200 flex-shrink-0">
               <Image
                 src="https://upload.wikimedia.org/wikipedia/id/e/e6/The_Weeknd_-_Blinding_Lights.png"
                 alt="Album Art for Blinding Lights by The Weeknd"
@@ -49,10 +39,10 @@ export default function Home() {
               />
             </div>
             <div className="overflow-hidden flex-grow">
-              <p className="font-bold text-white truncate">Blinding Lights</p>
-              <p className="text-sm text-gray-400 truncate">The Weeknd</p>
+              <p className="font-bold text-black truncate">Blinding Lights</p>
+              <p className="text-sm text-gray-700 truncate">The Weeknd</p>
             </div>
-            <MicVocal className="h-6 w-6 text-green-400 animate-pulse flex-shrink-0" />
+            <BarChart className="h-6 w-6 text-emerald-400 animate-pulse flex-shrink-0" />
           </div>
         </div>
       </div>
