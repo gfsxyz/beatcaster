@@ -14,7 +14,7 @@ const Dashboard = async () => {
     <div className="max-w-7xl mx-auto min-h-screen py-8 space-y-12">
       <Navbar />
 
-      <main className="flex justify-between px-4">
+      <main className="flex flex-col gap-16 px-4 lg:flex-row">
         <h1 className="sr-only">Dashboard</h1>
         <div className="space-y-6">
           <h2 className="font-semibold text-lg">Options</h2>
