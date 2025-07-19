@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  db:
+    image: "postgres:15"
+
+    restart: always
+
+    environment:
+      - POSTGRES_USER=beatcaster
+      - POSTGRES_PASSWORD=beatcaster
+      - POSTGRES_DB=beatcaster_db
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - beatcaster-data:/var/lib/postgresql/data
+volumes:
+  beatcaster-data:
