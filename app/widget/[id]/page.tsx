@@ -94,8 +94,8 @@ export default function Widget({
         transition={{ duration: 0.3 }}
         className={`p-4 ${getStyles(resolvedSearchParams.size).container}`}
       >
-        {resolvedSearchParams.cover === "true" ? (
-          <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3">
+          {resolvedSearchParams.cover === "true" && (
             <motion.img
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -106,55 +106,7 @@ export default function Widget({
               height={getStyles(resolvedSearchParams.size).image.height}
               className="ring-2 ring-white/50"
             />
-            <div
-              className="space-y-1"
-              style={getStyles(resolvedSearchParams.size).contentContainer}
-            >
-              {resolvedSearchParams.title === "true" && (
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: 0.1 }}
-                  className={`font-medium overflow-hidden ${
-                    getStyles(resolvedSearchParams.size).title
-                  }`}
-                >
-                  {data.item.name.length > 15 ? (
-                    <MarqueeText duration={data.item.name.length * 0.45}>
-                      {data.item.name}
-                    </MarqueeText>
-                  ) : (
-                    data.item.name
-                  )}
-                </motion.div>
-              )}
-              {resolvedSearchParams.artist === "true" && (
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: 0.2 }}
-                  className={`text-gray-500 overflow-hidden ${
-                    getStyles(resolvedSearchParams.size).metadata
-                  }`}
-                >
-                  {data.item.artists.map((a) => a.name).join(", ").length >
-                  15 ? (
-                    <MarqueeText
-                      duration={
-                        data.item.artists.map((a) => a.name).join(", ").length *
-                        0.25
-                      }
-                    >
-                      {data.item.artists.map((a) => a.name).join(", ")}
-                    </MarqueeText>
-                  ) : (
-                    data.item.artists.map((a) => a.name).join(", ")
-                  )}
-                </motion.div>
-              )}
-            </div>
-          </div>
-        ) : (
+          )}
           <div
             className="space-y-1"
             style={getStyles(resolvedSearchParams.size).contentContainer}
@@ -168,24 +120,13 @@ export default function Widget({
                   getStyles(resolvedSearchParams.size).title
                 }`}
               >
-                <motion.div
-                  className="whitespace-nowrap"
-                  animate={{
-                    x:
-                      data.item.name.length > 20
-                        ? [0, -(data.item.name.length * 8)]
-                        : 0,
-                  }}
-                  transition={{
-                    duration: data.item.name.length * 0.2,
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    ease: "linear",
-                    repeatDelay: 1,
-                  }}
-                >
-                  {data.item.name}
-                </motion.div>
+                {data.item.name.length > 15 ? (
+                  <MarqueeText duration={data.item.name.length * 0.45}>
+                    {data.item.name}
+                  </MarqueeText>
+                ) : (
+                  data.item.name
+                )}
               </motion.div>
             )}
             {resolvedSearchParams.artist === "true" && (
@@ -197,37 +138,22 @@ export default function Widget({
                   getStyles(resolvedSearchParams.size).metadata
                 }`}
               >
-                <motion.div
-                  className="whitespace-nowrap"
-                  animate={{
-                    x:
-                      data.item.artists.map((a) => a.name).join(", ").length >
-                      25
-                        ? [
-                            0,
-                            -(
-                              data.item.artists.map((a) => a.name).join(", ")
-                                .length * 6
-                            ),
-                          ]
-                        : 0,
-                  }}
-                  transition={{
-                    duration:
+                {data.item.artists.map((a) => a.name).join(", ").length > 15 ? (
+                  <MarqueeText
+                    duration={
                       data.item.artists.map((a) => a.name).join(", ").length *
-                      0.15,
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    ease: "linear",
-                    repeatDelay: 1,
-                  }}
-                >
-                  {data.item.artists.map((a) => a.name).join(", ")}
-                </motion.div>
+                      0.25
+                    }
+                  >
+                    {data.item.artists.map((a) => a.name).join(", ")}
+                  </MarqueeText>
+                ) : (
+                  data.item.artists.map((a) => a.name).join(", ")
+                )}
               </motion.div>
             )}
           </div>
-        )}
+        </div>
       </motion.div>
     </AnimatePresence>
   );
