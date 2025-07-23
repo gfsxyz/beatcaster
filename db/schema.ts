@@ -10,7 +10,7 @@ import type { AdapterAccount } from "next-auth/adapters";
 export const users = pgTable("user", {
   id: text("id").notNull().primaryKey(),
   name: text("name"),
-  email: text("email").notNull(),
+  email: text("email"),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
 
@@ -42,3 +42,11 @@ export const accounts = pgTable(
     }),
   })
 );
+
+export const sessions = pgTable("session", {
+  sessionToken: text("sessionToken").notNull().primaryKey(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  expires: timestamp("expires", { mode: "date" }).notNull(),
+});
