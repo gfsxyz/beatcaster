@@ -31,18 +31,18 @@ const POLLING_INTERVAL = 3000;
 // Size-based style configurations
 const getStyles = (size: string) => ({
   container:
-    size === "small" ? "text-xs" : size === "large" ? "text-xl" : "text-base",
+    size === "small" ? "text-base" : size === "large" ? "text-3xl" : "text-xl",
   image: {
-    width: size === "small" ? 38 : size === "large" ? 72 : 48,
-    height: size === "small" ? 38 : size === "large" ? 72 : 48,
+    width: size === "small" ? 48 : size === "large" ? 92 : 68,
+    height: size === "small" ? 48 : size === "large" ? 92 : 68,
   },
   contentContainer: {
-    width: size === "small" ? "130px" : size === "large" ? "220px" : "180px",
+    width: size === "small" ? "230px" : size === "large" ? "600px" : "400px",
   },
   title:
-    size === "small" ? "text-base" : size === "large" ? "text-2xl" : "text-lg",
+    size === "small" ? "text-xl" : size === "large" ? "text-4xl" : "text-2xl",
   metadata:
-    size === "small" ? "text-xs" : size === "large" ? "text-lg" : "text-sm",
+    size === "small" ? "text-lg" : size === "large" ? "text-2xl" : "text-xl",
 });
 
 export default function Widget({
@@ -116,7 +116,7 @@ export default function Widget({
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, delay: 0.1 }}
-                className={`font-medium overflow-hidden ${
+                className={`text-shadow-md text-gray-100 font-medium overflow-hidden ${
                   getStyles(resolvedSearchParams.size).title
                 }`}
               >
@@ -134,7 +134,7 @@ export default function Widget({
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, delay: 0.2 }}
-                className={`text-gray-500 overflow-hidden ${
+                className={`text-shadow-md text-gray-300 overflow-hidden ${
                   getStyles(resolvedSearchParams.size).metadata
                 }`}
               >
