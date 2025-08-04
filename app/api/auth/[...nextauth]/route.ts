@@ -36,21 +36,27 @@ export const authOptions = {
     }) {
       // Initial sign in
       if (account && user) {
-        // Generate a unique widget ID for new users
+        const checkUser = await db
+          .select()
+          .from(users)
+          .where(eq(users.id, user.id));
+        console.log(checkUser);
+
         if (!token.widgetId) {
-          token.widgetId = crypto.randomUUID();
+          token.widgetId = checkUser[0]?.widget_id ?? crypto.randomUUID();
         }
 
-        // Store tokens in database
-        await db
-          .update(users)
-          .set({
-            widget_id: token.widgetId,
-            spotify_access_token: account.access_token,
-            spotify_refresh_token: account.refresh_token,
-          })
-          .where(eq(users.id, user.id));
-
+        if (!checkUser[0]?.widget_id) {
+          // update widget_id and tokens
+          await db
+            .update(users)
+            .set({
+              widget_id: token.widgetId,
+              spotify_access_token: account.access_token,
+              spotify_refresh_token: account.refresh_token,
+            })
+            .where(eq(users.id, user.id));
+        }
         return {
           ...token,
           widgetId: token.widgetId,
