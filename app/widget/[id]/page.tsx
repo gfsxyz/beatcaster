@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { use } from "react";
 import MarqueeText from "@/components/MarqueeText";
+import { WidgetSettings } from "@/types/types";
 
 interface SpotifyData {
   item: {
@@ -19,6 +20,15 @@ interface SpotifyData {
 
 async function getCurrentlyPlaying(widgetId: string) {
   const res = await fetch(`/api/widget/${widgetId}`, {
+    cache: "no-store",
+  });
+
+  if (!res.ok) return null;
+  return res.json();
+}
+
+async function getCurrentUserSettings(widgetId: string) {
+  const res = await fetch(`/api/widget/${widgetId}/settings`, {
     cache: "no-store",
   });
 
@@ -47,19 +57,21 @@ const getStyles = (size: string) => ({
 
 export default function Widget({
   params,
-  searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ [key: string]: string }>;
 }) {
   const resolvedParams = use(params);
-  const resolvedSearchParams = use(searchParams);
   const [data, setData] = useState<SpotifyData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [widgetSettings, setWidgetSettings] = useState<WidgetSettings>();
 
   useEffect(() => {
     const fetchData = async () => {
       const newData = await getCurrentlyPlaying(resolvedParams.id);
+      const settings = await getCurrentUserSettings(resolvedParams.id);
+      if (JSON.stringify(settings) !== JSON.stringify(widgetSettings)) {
+        setWidgetSettings(settings);
+      }
       if (JSON.stringify(newData) !== JSON.stringify(data)) {
         setData(newData);
       }
@@ -80,7 +92,7 @@ export default function Widget({
     return null;
   }
 
-  if (!data?.item || !data.is_playing) {
+  if (!data?.item || !data.is_playing || !widgetSettings) {
     return null;
   }
 
@@ -92,32 +104,32 @@ export default function Widget({
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.3 }}
-        className={`p-4 ${getStyles(resolvedSearchParams.size).container}`}
+        className={`p-4 ${getStyles(widgetSettings.size).container}`}
       >
         <div className="flex items-center gap-3">
-          {resolvedSearchParams.cover === "true" && (
+          {widgetSettings.show_album_cover && (
             <motion.img
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3 }}
               src={data.item.album.images[0]?.url}
               alt="Album Cover"
-              width={getStyles(resolvedSearchParams.size).image.width}
-              height={getStyles(resolvedSearchParams.size).image.height}
+              width={getStyles(widgetSettings.size).image.width}
+              height={getStyles(widgetSettings.size).image.height}
               className="ring-2 ring-white/50"
             />
           )}
           <div
             className="space-y-1"
-            style={getStyles(resolvedSearchParams.size).contentContainer}
+            style={getStyles(widgetSettings.size).contentContainer}
           >
-            {resolvedSearchParams.title === "true" && (
+            {widgetSettings.show_title && (
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, delay: 0.1 }}
                 className={`text-shadow-md text-gray-100 font-medium overflow-hidden ${
-                  getStyles(resolvedSearchParams.size).title
+                  getStyles(widgetSettings.size).title
                 }`}
               >
                 {data.item.name.length > 15 ? (
@@ -129,13 +141,13 @@ export default function Widget({
                 )}
               </motion.div>
             )}
-            {resolvedSearchParams.artist === "true" && (
+            {widgetSettings.show_artist && (
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, delay: 0.2 }}
                 className={`text-shadow-md text-gray-300 overflow-hidden ${
-                  getStyles(resolvedSearchParams.size).metadata
+                  getStyles(widgetSettings.size).metadata
                 }`}
               >
                 {data.item.artists.map((a) => a.name).join(", ").length > 15 ? (

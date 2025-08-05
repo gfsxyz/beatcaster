@@ -4,11 +4,12 @@ import { Combobox } from "./Combobox";
 import Image from "next/image";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CheckCheck, Copy } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useSession } from "next-auth/react";
+import { Skeleton } from "./ui/skeleton";
 
 const GAME_OVERVIEW = [
   { value: "genshin_impact", label: "Genshin Impact", image: "/genshin.png" },
@@ -57,35 +58,60 @@ const sizeStyles = {
 
 const Overview = () => {
   const { data: session } = useSession();
+  const [isLoading, setIsLoading] = useState(true);
   const [isCopied, setIsCopied] = useState(false);
-  const [isTitleChecked, setIsTitleChecked] = useState(true);
-  const [isArtistsChecked, setIsArtistsChecked] = useState(true);
-  const [isAlbumCoverChecked, setIsAlbumCoverChecked] = useState(true);
-  const [sizeOption, setSizeOption] = useState<"small" | "medium" | "large">(
-    "medium"
-  );
+  const [show_title, setShowTitle] = useState(true);
+  const [show_artist, setShowArtist] = useState(true);
+  const [show_album_cover, setShowAlbumCover] = useState(true);
+  const [size, setSize] = useState<"small" | "medium" | "large">("medium");
   const [selectedGameValue, setSelectedGameValue] = useState(
     GAME_OVERVIEW[0].value
   );
+
+  // Get the widget ID from the session
+  const widgetId = session?.user?.widgetId;
+  const dynamicWidgetUrl = `${WIDGET_URL}/${widgetId}`;
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      setIsLoading(true);
+      const response = await fetch(`/api/widget/${widgetId}/settings`);
+      const data = await response.json();
+      setShowTitle(data.show_title);
+      setShowArtist(data.show_artist);
+      setShowAlbumCover(data.show_album_cover);
+      setSize(data.size);
+      setIsLoading(false);
+    };
+
+    if (session) {
+      fetchSettings();
+    }
+  }, [session]);
+
+  useEffect(() => {
+    const updateSettings = async () => {
+      await fetch(`/api/widget/${widgetId}/settings`, {
+        method: "POST",
+        body: JSON.stringify({
+          show_title,
+          show_artist,
+          show_album_cover,
+          size,
+        }),
+      });
+    };
+
+    if (session) {
+      updateSettings();
+    }
+  }, [show_title, show_artist, show_album_cover, size, session]);
 
   const selectedGameData =
     GAME_OVERVIEW.find((game) => game.value === selectedGameValue) ??
     GAME_OVERVIEW[0];
 
-  const selectedSizeStyle = sizeStyles[sizeOption];
-
-  // Build query params based on state
-  const params = new URLSearchParams();
-  if (isTitleChecked) params.append("title", "true");
-  if (isArtistsChecked) params.append("artist", "true");
-  if (isAlbumCoverChecked) params.append("cover", "true");
-  if (sizeOption) params.append("size", sizeOption);
-
-  // Get the widget ID from the session
-  const widgetId = session?.user?.widgetId;
-  const dynamicWidgetUrl = widgetId
-    ? `${WIDGET_URL}/${widgetId}?${params.toString()}`
-    : "Please login to get your widget URL";
+  const selectedSizeStyle = sizeStyles[size];
 
   const handleCopy = () => {
     navigator.clipboard.writeText(dynamicWidgetUrl).then(() => {
@@ -93,6 +119,10 @@ const Overview = () => {
       setTimeout(() => setIsCopied(false), CLIPBOARD_TIME_RESET);
     });
   };
+
+  if (isLoading) {
+    return <Skeleton className="w-full h-[56rem] rounded-lg" />;
+  }
   return (
     <>
       <div className="space-y-6 mx-auto">
@@ -102,26 +132,24 @@ const Overview = () => {
             <div className="flex items-center space-x-2">
               <Checkbox
                 id="Title"
-                defaultChecked={isTitleChecked}
-                onCheckedChange={(value) => setIsTitleChecked(Boolean(value))}
+                checked={show_title}
+                onCheckedChange={(value) => setShowTitle(Boolean(value))}
               />
               <Label htmlFor="Title">Title</Label>
             </div>
             <div className="flex items-center space-x-2">
               <Checkbox
                 id="Artists"
-                defaultChecked={isArtistsChecked}
-                onCheckedChange={(value) => setIsArtistsChecked(Boolean(value))}
+                checked={show_artist}
+                onCheckedChange={(value) => setShowArtist(Boolean(value))}
               />
               <Label htmlFor="Artists">Artists</Label>
             </div>
             <div className="flex items-center space-x-2">
               <Checkbox
                 id="AlbumCover"
-                defaultChecked={isAlbumCoverChecked}
-                onCheckedChange={(value) =>
-                  setIsAlbumCoverChecked(Boolean(value))
-                }
+                checked={show_album_cover}
+                onCheckedChange={(value) => setShowAlbumCover(Boolean(value))}
               />
               <Label htmlFor="AlbumCover">Album Cover</Label>
             </div>
@@ -133,9 +161,9 @@ const Overview = () => {
               <Combobox
                 options={OPTIONS_SIZE}
                 hideSearch
-                initialValues={sizeOption}
+                value={size}
                 onValueChange={(value) =>
-                  setSizeOption(value as "small" | "medium" | "large")
+                  setSize(value as "small" | "medium" | "large")
                 }
               />
             </div>
@@ -146,7 +174,7 @@ const Overview = () => {
         <Combobox
           options={GAME_OVERVIEW}
           hideSearch
-          initialValues={GAME_OVERVIEW[0].value}
+          defaultValue={GAME_OVERVIEW[0].value}
           onValueChange={setSelectedGameValue}
         />
 
@@ -166,7 +194,7 @@ const Overview = () => {
                 fontSize: selectedSizeStyle.fontSize,
               }}
             >
-              {isAlbumCoverChecked && (
+              {show_album_cover && (
                 <div className="flex items-center gap-3">
                   <Image
                     src="https://upload.wikimedia.org/wikipedia/id/e/e6/The_Weeknd_-_Blinding_Lights.png"
@@ -176,12 +204,12 @@ const Overview = () => {
                     className="rounded ring-2 ring-white/50 mr-2"
                   />
                   <div className="flex flex-col">
-                    {isTitleChecked && (
+                    {show_title && (
                       <span className={selectedSizeStyle.title}>
                         Song Title
                       </span>
                     )}
-                    {isArtistsChecked && (
+                    {show_artist && (
                       <span className={selectedSizeStyle.artist}>
                         Artist Name
                       </span>
@@ -189,12 +217,12 @@ const Overview = () => {
                   </div>
                 </div>
               )}
-              {!isAlbumCoverChecked && (
+              {!show_album_cover && (
                 <>
-                  {isTitleChecked && (
+                  {show_title && (
                     <div className={selectedSizeStyle.title}>Song Title</div>
                   )}
-                  {isArtistsChecked && (
+                  {show_artist && (
                     <div className={selectedSizeStyle.artist}>Artist Name</div>
                   )}
                 </>

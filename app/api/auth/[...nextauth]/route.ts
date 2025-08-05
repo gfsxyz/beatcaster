@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import Spotify from "next-auth/providers/spotify";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "@/db";
-import { users } from "@/db/schema";
+import { users, widget_settings } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import crypto from "crypto";
 
@@ -40,7 +40,6 @@ export const authOptions = {
           .select()
           .from(users)
           .where(eq(users.id, user.id));
-        console.log(checkUser);
 
         if (!token.widgetId) {
           token.widgetId = checkUser[0]?.widget_id ?? crypto.randomUUID();
@@ -56,6 +55,11 @@ export const authOptions = {
               spotify_refresh_token: account.refresh_token,
             })
             .where(eq(users.id, user.id));
+
+          await db.insert(widget_settings).values({
+            id: crypto.randomUUID(),
+            userId: user.id,
+          });
         }
         return {
           ...token,
@@ -74,6 +78,7 @@ export const authOptions = {
       session.accessToken = token.accessToken;
       session.user = {
         ...session.user,
+        id: token.sub,
         accessToken: token.accessToken,
         widgetId: token.widgetId,
       };

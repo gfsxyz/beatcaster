@@ -23,7 +23,8 @@ interface ComboboxProps {
   label?: string;
   options: { value: string; label: string }[];
   hideSearch?: boolean;
-  initialValues?: string;
+  defaultValue?: string;
+  value?: string;
   onValueChange?: (value: string) => void;
 }
 
@@ -31,11 +32,20 @@ export function Combobox({
   label = "Item",
   options,
   hideSearch = false,
-  initialValues = "",
+  defaultValue = "",
+  value: controlledValue,
   onValueChange,
 }: ComboboxProps) {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState(initialValues);
+  const [internalValue, setInternalValue] = React.useState(defaultValue);
+
+  const value = controlledValue ?? internalValue;
+
+  React.useEffect(() => {
+    if (controlledValue) {
+      setInternalValue(controlledValue);
+    }
+  }, [controlledValue]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -66,7 +76,7 @@ export function Combobox({
                   value={item.value}
                   onSelect={(currentValue) => {
                     const newValue = currentValue === value ? "" : currentValue;
-                    setValue(newValue);
+                    setInternalValue(newValue);
                     onValueChange?.(newValue);
                     setOpen(false);
                   }}

@@ -4,19 +4,22 @@ import {
   text,
   primaryKey,
   integer,
+  boolean,
+  pgEnum,
 } from "drizzle-orm/pg-core";
 import type { AdapterAccount } from "next-auth/adapters";
+
+export const sizeEnum = pgEnum("size", ["small", "medium", "large"]);
 
 export const widget_settings = pgTable("widget_setting", {
   id: text("id").notNull().primaryKey(),
   userId: text("userId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
-  title: text("title").notNull(),
-  artists: text("artists").notNull(),
-  albumCover: text("albumCover").notNull(),
-  size: text("size").notNull(),
-  timestamp: integer("timestamp").notNull(),
+  show_title: boolean("show_title").notNull().default(true),
+  show_artist: boolean("show_artist").notNull().default(true),
+  show_album_cover: boolean("show_album_cover").notNull().default(true),
+  size: sizeEnum("size").notNull().default("medium"),
   createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
   updatedAt: timestamp("updatedAt", { mode: "date" })
     .notNull()
