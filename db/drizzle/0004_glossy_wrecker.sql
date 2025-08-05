@@ -1,0 +1,1 @@
+ALTER TABLE "widget_setting" DROP CONSTRAINT "widget_setting_userId_id_pk";

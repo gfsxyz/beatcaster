@@ -31,13 +31,36 @@ const WIDGET_URL = process.env.NEXT_PUBLIC_APP_URL
   : "http://127.0.0.1:3000/widget";
 const CLIPBOARD_TIME_RESET = 2000;
 
+const sizeStyles = {
+  small: {
+    maxWidth: "max-w-xs",
+    fontSize: 12,
+    imageSize: 32,
+    title: "font-bold text-base",
+    artist: "text-xs",
+  },
+  medium: {
+    maxWidth: "max-w-md",
+    fontSize: 16,
+    imageSize: 48,
+    title: "font-bold text-lg",
+    artist: "text-sm",
+  },
+  large: {
+    maxWidth: "max-w-2xl",
+    fontSize: 22,
+    imageSize: 72,
+    title: "font-bold text-2xl",
+    artist: "text-lg",
+  },
+};
+
 const Overview = () => {
   const { data: session } = useSession();
   const [isCopied, setIsCopied] = useState(false);
   const [isTitleChecked, setIsTitleChecked] = useState(true);
   const [isArtistsChecked, setIsArtistsChecked] = useState(true);
   const [isAlbumCoverChecked, setIsAlbumCoverChecked] = useState(true);
-  const [isTimestampChecked, setIsTimestampChecked] = useState(false);
   const [sizeOption, setSizeOption] = useState<"small" | "medium" | "large">(
     "medium"
   );
@@ -48,6 +71,8 @@ const Overview = () => {
   const selectedGameData =
     GAME_OVERVIEW.find((game) => game.value === selectedGameValue) ??
     GAME_OVERVIEW[0];
+
+  const selectedSizeStyle = sizeStyles[sizeOption];
 
   // Build query params based on state
   const params = new URLSearchParams();
@@ -136,20 +161,9 @@ const Overview = () => {
           {/* Music Player Overlay */}
           <div className="absolute inset-0 flex flex-col justify-end p-4 pointer-events-none">
             <div
-              className={`rounded-lg p-4 text-white text-shadow-sm space-y-2 ${
-                sizeOption === "small"
-                  ? "max-w-xs"
-                  : sizeOption === "large"
-                  ? "max-w-2xl"
-                  : "max-w-md"
-              }`}
+              className={`rounded-lg p-4 text-white text-shadow-sm space-y-2 ${selectedSizeStyle.maxWidth}`}
               style={{
-                fontSize:
-                  sizeOption === "small"
-                    ? 12
-                    : sizeOption === "large"
-                    ? 22
-                    : 16,
+                fontSize: selectedSizeStyle.fontSize,
               }}
             >
               {isAlbumCoverChecked && (
@@ -157,46 +171,18 @@ const Overview = () => {
                   <Image
                     src="https://upload.wikimedia.org/wikipedia/id/e/e6/The_Weeknd_-_Blinding_Lights.png"
                     alt="Album Cover"
-                    width={
-                      sizeOption === "small"
-                        ? 32
-                        : sizeOption === "large"
-                        ? 72
-                        : 48
-                    }
-                    height={
-                      sizeOption === "small"
-                        ? 32
-                        : sizeOption === "large"
-                        ? 72
-                        : 48
-                    }
+                    width={selectedSizeStyle.imageSize}
+                    height={selectedSizeStyle.imageSize}
                     className="rounded ring-2 ring-white/50 mr-2"
                   />
                   <div className="flex flex-col">
                     {isTitleChecked && (
-                      <span
-                        className={
-                          sizeOption === "small"
-                            ? "font-bold text-base"
-                            : sizeOption === "large"
-                            ? "font-bold text-2xl"
-                            : "font-bold text-lg"
-                        }
-                      >
+                      <span className={selectedSizeStyle.title}>
                         Song Title
                       </span>
                     )}
                     {isArtistsChecked && (
-                      <span
-                        className={
-                          sizeOption === "small"
-                            ? "text-xs"
-                            : sizeOption === "large"
-                            ? "text-lg"
-                            : "text-sm"
-                        }
-                      >
+                      <span className={selectedSizeStyle.artist}>
                         Artist Name
                       </span>
                     )}
@@ -206,59 +192,12 @@ const Overview = () => {
               {!isAlbumCoverChecked && (
                 <>
                   {isTitleChecked && (
-                    <div
-                      className={
-                        sizeOption === "small"
-                          ? "font-bold text-base"
-                          : sizeOption === "large"
-                          ? "font-bold text-2xl"
-                          : "font-bold text-lg"
-                      }
-                    >
-                      Song Title
-                    </div>
+                    <div className={selectedSizeStyle.title}>Song Title</div>
                   )}
                   {isArtistsChecked && (
-                    <div
-                      className={
-                        sizeOption === "small"
-                          ? "text-xs"
-                          : sizeOption === "large"
-                          ? "text-lg"
-                          : "text-sm"
-                      }
-                    >
-                      Artist Name
-                    </div>
+                    <div className={selectedSizeStyle.artist}>Artist Name</div>
                   )}
                 </>
-              )}
-              {isTimestampChecked && (
-                <div
-                  className={
-                    sizeOption === "small"
-                      ? "flex items-center gap-2 text-[10px] mt-2"
-                      : sizeOption === "large"
-                      ? "flex items-center gap-2 text-base mt-2"
-                      : "flex items-center gap-2 text-xs mt-2"
-                  }
-                >
-                  <span>01:23</span>
-                  <div className="flex-1 h-1 bg-white/30 rounded mx-2">
-                    <div
-                      className="h-1 bg-white rounded"
-                      style={{
-                        width:
-                          sizeOption === "small"
-                            ? "30%"
-                            : sizeOption === "large"
-                            ? "60%"
-                            : "40%",
-                      }}
-                    />
-                  </div>
-                  <span>03:45</span>
-                </div>
               )}
             </div>
           </div>
