@@ -90,21 +90,28 @@ const Overview = () => {
   }, [session]);
 
   useEffect(() => {
-    const updateSettings = async () => {
-      await fetch(`/api/widget/${widgetId}/settings`, {
-        method: "POST",
-        body: JSON.stringify({
-          show_title,
-          show_artist,
-          show_album_cover,
-          size,
-        }),
-      });
-    };
+    if (!session) return;
 
-    if (session) {
+    const handler = setTimeout(() => {
+      const updateSettings = async () => {
+        console.log("🚀 Sending update to API..."); // Tambahkan log untuk debugging
+        await fetch(`/api/widget/${widgetId}/settings`, {
+          method: "POST",
+          body: JSON.stringify({
+            show_title,
+            show_artist,
+            show_album_cover,
+            size,
+          }),
+        });
+      };
+
       updateSettings();
-    }
+    }, 500);
+
+    return () => {
+      clearTimeout(handler);
+    };
   }, [show_title, show_artist, show_album_cover, size, session]);
 
   const selectedGameData =
