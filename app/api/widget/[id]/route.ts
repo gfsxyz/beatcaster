@@ -104,8 +104,6 @@ export async function GET(
       });
     }
 
-    console.log("test");
-
     // If the response is still not OK after retry, or if it's another error
     if (!response.ok) {
       // A 204 status means no song is playing, which is not an error
