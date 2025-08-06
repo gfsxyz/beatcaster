@@ -28,7 +28,6 @@ async function refreshAccessToken(refreshToken: string) {
   });
 
   if (!response.ok) {
-    // THIS IS THE MOST IMPORTANT PART: Log the full error from Spotify
     const errorDetails = await response.json();
     console.error("Failed to refresh Spotify token:", errorDetails);
     return null;

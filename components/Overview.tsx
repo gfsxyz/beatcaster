@@ -94,7 +94,7 @@ const Overview = () => {
 
     const handler = setTimeout(() => {
       const updateSettings = async () => {
-        console.log("🚀 Sending update to API..."); // Tambahkan log untuk debugging
+        console.log("🚀 Sending update to API...");
         await fetch(`/api/widget/${widgetId}/settings`, {
           method: "POST",
           body: JSON.stringify({
