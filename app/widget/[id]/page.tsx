@@ -70,12 +70,16 @@ export default function Widget({
     const fetchData = async () => {
       const newData = await getCurrentlyPlaying(resolvedParams.id);
       const settings = await getCurrentUserSettings(resolvedParams.id);
-      if (JSON.stringify(settings) !== JSON.stringify(widgetSettings)) {
-        setWidgetSettings(settings);
-      }
-      if (JSON.stringify(newData) !== JSON.stringify(data)) {
-        setData(newData);
-      }
+      setWidgetSettings((prevSettings) =>
+        JSON.stringify(settings) !== JSON.stringify(prevSettings)
+          ? settings
+          : prevSettings
+      );
+      setData((prevData) =>
+        JSON.stringify(newData) !== JSON.stringify(prevData)
+          ? newData
+          : prevData
+      );
       setIsLoading(false);
     };
 

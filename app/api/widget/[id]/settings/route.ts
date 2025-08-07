@@ -1,9 +1,9 @@
 import { db } from "@/db";
 import { users, widget_settings } from "@/db/schema";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
+import { authOptions } from "@/lib/auth_options";
 
 export async function GET(
   request: Request,

@@ -99,7 +99,7 @@ const Overview = () => {
     if (session) {
       fetchSettings();
     }
-  }, [session]);
+  }, [session, widgetId]);
 
   useEffect(() => {
     if (!session) return;
@@ -125,9 +125,15 @@ const Overview = () => {
     return () => {
       clearTimeout(handler);
     };
-  }, [show_title, show_artist, show_album_cover, font, size, session]);
-
-  console.log(font);
+  }, [
+    show_title,
+    show_artist,
+    show_album_cover,
+    font,
+    size,
+    session,
+    widgetId,
+  ]);
 
   const selectedGameData =
     GAME_OVERVIEW.find((game) => game.value === selectedGameValue) ??
