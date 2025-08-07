@@ -37,8 +37,8 @@ export const users = pgTable("user", {
   image: text("image"),
 
   widget_id: text("widget_id").unique(),
-  spotify_access_token: text("spotify_access_token").notNull(),
-  spotify_refresh_token: text("spotify_refresh_token").notNull(),
+  spotify_access_token: text("spotify_access_token"),
+  spotify_refresh_token: text("spotify_refresh_token"),
 });
 
 export const accounts = pgTable(
