@@ -10,6 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useSession } from "next-auth/react";
 import { Skeleton } from "./ui/skeleton";
+import { Switch } from "./ui/switch";
 
 const GAME_OVERVIEW = [
   { value: "genshin_impact", label: "Genshin Impact", image: "/genshin.png" },
@@ -132,39 +133,43 @@ const Overview = () => {
   }
   return (
     <>
-      <div className="space-y-6 mx-auto">
+      <div className="space-y-6 mx-auto md:mx-0 w-96">
         <h2 className="font-semibold text-lg">Options</h2>
-        <div className="flex gap-8">
-          <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="Title"
+        <div>
+          <div className="space-y-2">
+            <div className="flex items-center space-x-2 justify-between w-full">
+              <Label className="flex-auto py-2" htmlFor="title">
+                Show song title
+              </Label>
+              <Switch
+                id="title"
                 checked={show_title}
                 onCheckedChange={(value) => setShowTitle(Boolean(value))}
               />
-              <Label htmlFor="Title">Title</Label>
             </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox
+            <div className="flex items-center space-x-2 justify-between w-full">
+              <Label className="flex-auto py-2" htmlFor="Artists">
+                Artists
+              </Label>
+              <Switch
                 id="Artists"
                 checked={show_artist}
                 onCheckedChange={(value) => setShowArtist(Boolean(value))}
               />
-              <Label htmlFor="Artists">Artists</Label>
             </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox
+            <div className="flex items-center space-x-2 justify-between w-full">
+              <Label className="flex-auto py-2" htmlFor="AlbumCover">
+                Album Cover
+              </Label>
+              <Switch
                 id="AlbumCover"
                 checked={show_album_cover}
                 onCheckedChange={(value) => setShowAlbumCover(Boolean(value))}
               />
-              <Label htmlFor="AlbumCover">Album Cover</Label>
             </div>
-          </div>
 
-          <div className="flex flex-col justify-between">
-            <div className="flex items-center space-x-2 -mb-2.5">
-              <Label>Size: </Label>
+            <div className="space-y-2 py-4">
+              <Label>Size</Label>
               <Combobox
                 options={OPTIONS_SIZE}
                 hideSearch
@@ -177,7 +182,10 @@ const Overview = () => {
           </div>
         </div>
       </div>
-      <div className="space-y-4 w-fit mx-auto">
+      <div
+        className="space-y-4 w-fit mx-auto md:mr-0"
+        style={{ fontFamily: "var(--font-geist-mono)" }}
+      >
         <Combobox
           options={GAME_OVERVIEW}
           hideSearch
