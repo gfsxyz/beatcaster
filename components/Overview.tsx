@@ -6,11 +6,12 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useState, useEffect } from "react";
 import { CheckCheck, Copy } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useSession } from "next-auth/react";
 import { Skeleton } from "./ui/skeleton";
 import { Switch } from "./ui/switch";
+import { FontEnum } from "@/types/types";
+import { FONT_VARIABLES } from "@/lib/font_variables";
 
 const GAME_OVERVIEW = [
   { value: "genshin_impact", label: "Genshin Impact", image: "/genshin.png" },
@@ -27,6 +28,14 @@ const OPTIONS_SIZE = [
   { value: "medium", label: "Medium" },
   { value: "large", label: "Large" },
 ];
+
+const fontOptions: FontEnum[] = ["default", "geistMono", "comicSans"];
+
+const FONT_STYLES = fontOptions.map((font) => ({
+  value: font,
+  label:
+    font.charAt(0).toUpperCase() + font.slice(1).replace(/([A-Z])/g, " $1"),
+}));
 
 const WIDGET_URL = process.env.NEXT_PUBLIC_APP_URL
   ? `${process.env.NEXT_PUBLIC_APP_URL}/widget`
@@ -65,8 +74,9 @@ const Overview = () => {
   const [show_artist, setShowArtist] = useState(true);
   const [show_album_cover, setShowAlbumCover] = useState(true);
   const [size, setSize] = useState<"small" | "medium" | "large">("medium");
+  const [font, setFont] = useState<FontEnum>("default");
   const [selectedGameValue, setSelectedGameValue] = useState(
-    GAME_OVERVIEW[0].value
+    GAME_OVERVIEW[2].value
   );
 
   // Get the widget ID from the session
@@ -81,6 +91,7 @@ const Overview = () => {
       setShowTitle(data.show_title);
       setShowArtist(data.show_artist);
       setShowAlbumCover(data.show_album_cover);
+      setFont(data.font);
       setSize(data.size);
       setIsLoading(false);
     };
@@ -102,6 +113,7 @@ const Overview = () => {
             show_title,
             show_artist,
             show_album_cover,
+            font,
             size,
           }),
         });
@@ -113,7 +125,9 @@ const Overview = () => {
     return () => {
       clearTimeout(handler);
     };
-  }, [show_title, show_artist, show_album_cover, size, session]);
+  }, [show_title, show_artist, show_album_cover, font, size, session]);
+
+  console.log(font);
 
   const selectedGameData =
     GAME_OVERVIEW.find((game) => game.value === selectedGameValue) ??
@@ -168,29 +182,42 @@ const Overview = () => {
               />
             </div>
 
-            <div className="space-y-2 py-4">
-              <Label>Size</Label>
-              <Combobox
-                options={OPTIONS_SIZE}
-                hideSearch
-                value={size}
-                onValueChange={(value) =>
-                  setSize(value as "small" | "medium" | "large")
-                }
-              />
+            <div className="flex gap-8">
+              <div className="space-y-2 py-4">
+                <Label>Font Styles</Label>
+                <Combobox
+                  options={FONT_STYLES}
+                  hideSearch
+                  value={font}
+                  onValueChange={(value) => setFont(value as FontEnum)}
+                  buttonClassName="lg:w-44"
+                />
+              </div>
+
+              <div className="space-y-2 py-4">
+                <Label>Size</Label>
+                <Combobox
+                  options={OPTIONS_SIZE}
+                  hideSearch
+                  value={size}
+                  onValueChange={(value) =>
+                    setSize(value as "small" | "medium" | "large")
+                  }
+                  buttonClassName="lg:w-44"
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div
-        className="space-y-4 w-fit mx-auto md:mr-0"
-        style={{ fontFamily: "var(--font-geist-mono)" }}
-      >
+      <div className="space-y-4 w-fit mx-auto md:mr-0">
         <Combobox
           options={GAME_OVERVIEW}
           hideSearch
-          defaultValue={GAME_OVERVIEW[0].value}
+          defaultValue={selectedGameValue}
           onValueChange={setSelectedGameValue}
+          buttonClassName="w-48"
+          contentClassName="w-48"
         />
 
         <div className="relative w-96 h-96 mx-auto">
@@ -202,7 +229,10 @@ const Overview = () => {
             src={selectedGameData.image}
           />
           {/* Music Player Overlay */}
-          <div className="absolute inset-0 flex flex-col justify-end p-4 pointer-events-none">
+          <div
+            className="absolute inset-0 flex flex-col justify-end p-4 pointer-events-none"
+            style={{ fontFamily: `var(${FONT_VARIABLES[font]})` }}
+          >
             <div
               className={`rounded-lg p-4 text-white text-shadow-sm space-y-2 ${selectedSizeStyle.maxWidth}`}
               style={{
@@ -250,6 +280,10 @@ const Overview = () => {
             value={dynamicWidgetUrl}
             readOnly
             placeholder="Login to get your widget URL"
+            style={{
+              fontFamily: `var(${FONT_VARIABLES["geistMono"]})`,
+              fontSize: 14,
+            }}
           />
           <Button
             size={"sm"}

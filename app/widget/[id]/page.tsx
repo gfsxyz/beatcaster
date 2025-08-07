@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { use } from "react";
 import MarqueeText from "@/components/MarqueeText";
 import { WidgetSettings } from "@/types/types";
+import { FONT_VARIABLES } from "@/lib/font_variables";
 
 interface SpotifyData {
   item: {
@@ -105,6 +106,7 @@ export default function Widget({
         exit={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.3 }}
         className={`p-4 ${getStyles(widgetSettings.size).container}`}
+        style={{ fontFamily: `var(${FONT_VARIABLES[widgetSettings.font]})` }}
       >
         <div className="flex items-center gap-3">
           {widgetSettings.show_album_cover && (

@@ -26,6 +26,8 @@ interface ComboboxProps {
   defaultValue?: string;
   value?: string;
   onValueChange?: (value: string) => void;
+  buttonClassName?: string;
+  contentClassName?: string;
 }
 
 export function Combobox({
@@ -35,6 +37,8 @@ export function Combobox({
   defaultValue = "",
   value: controlledValue,
   onValueChange,
+  buttonClassName,
+  contentClassName,
 }: ComboboxProps) {
   const [open, setOpen] = React.useState(false);
   const [internalValue, setInternalValue] = React.useState(defaultValue);
@@ -54,7 +58,7 @@ export function Combobox({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className={cn("w-32 justify-between", buttonClassName)}
         >
           {value
             ? options.find((item) => item.value === value)?.label
@@ -62,7 +66,7 @@ export function Combobox({
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className={cn("w-32 p-0", contentClassName)}>
         <Command>
           {!hideSearch && (
             <CommandInput placeholder={`Search ${label}...`} className="h-9" />

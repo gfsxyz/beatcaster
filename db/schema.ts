@@ -10,6 +10,7 @@ import {
 import type { AdapterAccount } from "next-auth/adapters";
 
 export const sizeEnum = pgEnum("size", ["small", "medium", "large"]);
+export const fontEnum = pgEnum("font", ["default", "geistMono", "comicSans"]);
 
 export const widget_settings = pgTable("widget_setting", {
   id: text("id").notNull().primaryKey(),
@@ -19,6 +20,7 @@ export const widget_settings = pgTable("widget_setting", {
   show_title: boolean("show_title").notNull().default(true),
   show_artist: boolean("show_artist").notNull().default(true),
   show_album_cover: boolean("show_album_cover").notNull().default(true),
+  font: fontEnum("font").notNull().default("default"),
   size: sizeEnum("size").notNull().default("medium"),
   createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
   updatedAt: timestamp("updatedAt", { mode: "date" })
