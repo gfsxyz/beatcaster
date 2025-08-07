@@ -147,7 +147,7 @@ const Overview = () => {
   }
   return (
     <>
-      <div className="space-y-6 mx-auto md:mx-0 w-96">
+      <div className="space-y-6 mx-auto md:mx-0 w-full max-w-96">
         <h2 className="font-semibold text-lg">Options</h2>
         <div>
           <div className="space-y-2">
@@ -210,7 +210,7 @@ const Overview = () => {
           </div>
         </div>
       </div>
-      <div className="space-y-4 w-fit mx-auto md:mr-0">
+      <div className="space-y-4 w-full max-w-96 mx-auto md:mr-0">
         <Combobox
           options={GAME_OVERVIEW}
           hideSearch
@@ -220,7 +220,7 @@ const Overview = () => {
           contentClassName="w-48"
         />
 
-        <div className="relative w-96 h-96 mx-auto">
+        <div className="relative w-full min-w-56 max-w-96 h-96 mx-auto">
           <Image
             alt="game overview"
             width="360"
