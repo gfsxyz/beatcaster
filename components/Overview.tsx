@@ -38,7 +38,7 @@ const FONT_STYLES = fontOptions.map((font) => ({
 }));
 
 const WIDGET_URL = process.env.NEXT_PUBLIC_APP_URL
-  ? `${process.env.NEXT_PUBLIC_APP_URL}/widget`
+  ? `${process.env.NEXTAUTH_URL}/widget`
   : "http://127.0.0.1:3000/widget";
 const CLIPBOARD_TIME_RESET = 2000;
 
