@@ -37,8 +37,10 @@ const FONT_STYLES = fontOptions.map((font) => ({
     font.charAt(0).toUpperCase() + font.slice(1).replace(/([A-Z])/g, " $1"),
 }));
 
+console.log(process.env.NEXT_PUBLIC_APP_URL, "nextauth url");
+
 const WIDGET_URL = process.env.NEXT_PUBLIC_APP_URL
-  ? `${process.env.NEXTAUTH_URL}/widget`
+  ? `${process.env.NEXT_PUBLIC_APP_URL}/widget`
   : "http://127.0.0.1:3000/widget";
 const CLIPBOARD_TIME_RESET = 2000;
 
