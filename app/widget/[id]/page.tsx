@@ -6,6 +6,7 @@ import { use } from "react";
 import MarqueeText from "@/components/MarqueeText";
 import { WidgetSettings } from "@/types/types";
 import { FONT_VARIABLES } from "@/lib/font_variables";
+import ProtectedWidgetContainer from "@/components/ProtectedWidgetContainer";
 
 interface SpotifyData {
   item: {
@@ -38,23 +39,6 @@ async function getCurrentUserSettings(widgetId: string) {
 }
 
 const POLLING_INTERVAL = 3000;
-
-// Size-based style configurations
-const getStyles = (size: string) => ({
-  container:
-    size === "small" ? "text-base" : size === "large" ? "text-3xl" : "text-xl",
-  image: {
-    width: size === "small" ? 48 : size === "large" ? 92 : 68,
-    height: size === "small" ? 48 : size === "large" ? 92 : 68,
-  },
-  contentContainer: {
-    width: size === "small" ? "230px" : size === "large" ? "600px" : "400px",
-  },
-  title:
-    size === "small" ? "text-xl" : size === "large" ? "text-4xl" : "text-2xl",
-  metadata:
-    size === "small" ? "text-lg" : size === "large" ? "text-2xl" : "text-xl",
-});
 
 export default function Widget({
   params,
@@ -102,77 +86,105 @@ export default function Widget({
   }
 
   return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={data.item.name}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -20 }}
-        transition={{ duration: 0.3 }}
-        className={`p-4 ${getStyles(widgetSettings.size).container}`}
-        style={{ fontFamily: `var(${FONT_VARIABLES[widgetSettings.font]})` }}
-      >
-        <div className="flex items-center gap-3">
-          {widgetSettings.show_album_cover && (
-            <motion.img
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3 }}
-              src={data.item.album.images[0]?.url}
-              alt="Album Cover"
-              width={getStyles(widgetSettings.size).image.width}
-              height={getStyles(widgetSettings.size).image.height}
-              className="ring-2 ring-white/50"
-            />
-          )}
+    <ProtectedWidgetContainer>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={data.item.name}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3 }}
+          style={{
+            fontFamily: `var(${FONT_VARIABLES[widgetSettings.font]})`,
+            padding: "1rem",
+          }}
+        >
           <div
-            className="space-y-1"
-            style={getStyles(widgetSettings.size).contentContainer}
+            id="widget-container"
+            style={{
+              display: "flex",
+              gap: "2rem",
+            }}
           >
-            {widgetSettings.show_title && (
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: 0.1 }}
-                className={`text-shadow-md text-gray-100 font-medium overflow-hidden ${
-                  getStyles(widgetSettings.size).title
-                }`}
-              >
-                {data.item.name.length > 15 ? (
-                  <MarqueeText duration={data.item.name.length * 0.45}>
-                    {data.item.name}
-                  </MarqueeText>
-                ) : (
-                  data.item.name
-                )}
-              </motion.div>
+            {widgetSettings.show_album_cover && (
+              <motion.img
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3 }}
+                src={data.item.album.images[0]?.url}
+                alt="Album Cover"
+                width={184}
+                height={184}
+                id="widget-album-cover"
+                style={{ paddingTop: 12 }}
+              />
             )}
-            {widgetSettings.show_artist && (
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: 0.2 }}
-                className={`text-shadow-md text-gray-300 overflow-hidden ${
-                  getStyles(widgetSettings.size).metadata
-                }`}
-              >
-                {data.item.artists.map((a) => a.name).join(", ").length > 15 ? (
-                  <MarqueeText
-                    duration={
-                      data.item.artists.map((a) => a.name).join(", ").length *
-                      0.25
-                    }
-                  >
-                    {data.item.artists.map((a) => a.name).join(", ")}
-                  </MarqueeText>
-                ) : (
-                  data.item.artists.map((a) => a.name).join(", ")
-                )}
-              </motion.div>
-            )}
+            <div
+              id="content-container"
+              style={{
+                width: 550,
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                gap: "0.75rem",
+                textShadow:
+                  "0px 1px 1px var(--tw-text-shadow-color, rgb(0 0 0 / 0.1)), 0px 1px 2px var(--tw-text-shadow-color, rgb(0 0 0 / 0.1)), 0px 2px 4px var(--tw-text-shadow-color, rgb(0 0 0 / 0.1))",
+              }}
+            >
+              {widgetSettings.show_title && (
+                <motion.div
+                  id="widget-title"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: 0.1 }}
+                  style={{
+                    fontSize: "3.25rem",
+                    color: "#ffffff",
+                    WebkitFontSmoothing: "antialiased",
+                  }}
+                >
+                  {data.item.name.length > 15 ? (
+                    <MarqueeText duration={data.item.name.length * 0.45}>
+                      {data.item.name}
+                    </MarqueeText>
+                  ) : (
+                    data.item.name
+                  )}
+                </motion.div>
+              )}
+              {widgetSettings.show_artist && (
+                <motion.div
+                  id="widget-artists"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: 0.2 }}
+                  style={{
+                    fontSize: "2.25rem",
+                    color: "#d1d5dc", //gray 300
+                    WebkitFontSmoothing: "antialiased",
+                  }}
+                >
+                  {data.item.artists.map((a) => a.name).join(", ").length >
+                  15 ? (
+                    <MarqueeText
+                      duration={
+                        data.item.artists.map((a) => a.name).join(", ").length *
+                        0.25
+                      }
+                    >
+                      {data.item.artists.map((a) => a.name).join(", ")}
+                    </MarqueeText>
+                  ) : (
+                    data.item.artists.map((a) => a.name).join(", ")
+                  )}
+                </motion.div>
+              )}
+            </div>
           </div>
-        </div>
-      </motion.div>
-    </AnimatePresence>
+        </motion.div>
+      </AnimatePresence>
+    </ProtectedWidgetContainer>
   );
 }

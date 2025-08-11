@@ -37,8 +37,6 @@ const FONT_STYLES = fontOptions.map((font) => ({
     font.charAt(0).toUpperCase() + font.slice(1).replace(/([A-Z])/g, " $1"),
 }));
 
-console.log(process.env.NEXT_PUBLIC_APP_URL, "nextauth url");
-
 const WIDGET_URL = process.env.NEXT_PUBLIC_APP_URL
   ? `${process.env.NEXT_PUBLIC_APP_URL}/widget`
   : "http://127.0.0.1:3000/widget";
@@ -108,7 +106,6 @@ const Overview = () => {
 
     const handler = setTimeout(() => {
       const updateSettings = async () => {
-        console.log("🚀 Sending update to API...");
         await fetch(`/api/widget/${widgetId}/settings`, {
           method: "POST",
           body: JSON.stringify({
