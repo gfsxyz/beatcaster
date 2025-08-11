@@ -38,7 +38,7 @@ const FONT_STYLES = fontOptions.map((font) => ({
 }));
 
 const WIDGET_URL = process.env.NEXT_PUBLIC_APP_URL
-  ? `${process.env.NEXT_PUBLIC_APP_URL}/widget`
+  ? `${process.env.NEXTAUTH_URL}/widget`
   : "http://127.0.0.1:3000/widget";
 const CLIPBOARD_TIME_RESET = 2000;
 
@@ -248,7 +248,7 @@ const Overview = () => {
               {show_album_cover && (
                 <div className="flex items-center gap-3">
                   <Image
-                    src="https://upload.wikimedia.org/wikipedia/id/e/e6/The_Weeknd_-_Blinding_Lights.png"
+                    src="/1975.png"
                     alt="Album Cover"
                     width={selectedSizeStyle.imageSize}
                     height={selectedSizeStyle.imageSize}

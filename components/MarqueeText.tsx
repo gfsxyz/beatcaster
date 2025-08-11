@@ -1,4 +1,6 @@
-import { motion } from "framer-motion";
+"use client";
+
+import { motion } from "motion/react";
 
 // Helper component for the marquee effect
 const MarqueeText = ({
