@@ -197,7 +197,9 @@ const Overview = () => {
                   options={FONT_STYLES}
                   hideSearch
                   value={font}
-                  onValueChange={(value) => setFont(value as FontEnum)}
+                  onValueChange={(value) =>
+                    setFont((value as FontEnum) || font)
+                  }
                   buttonClassName="lg:w-44"
                 />
               </div>
@@ -209,7 +211,7 @@ const Overview = () => {
                   hideSearch
                   value={size}
                   onValueChange={(value) =>
-                    setSize(value as "small" | "medium" | "large")
+                    setSize((value as "small" | "medium" | "large") || size)
                   }
                   buttonClassName="lg:w-44"
                 />
