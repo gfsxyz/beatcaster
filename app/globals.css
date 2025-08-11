@@ -116,6 +116,12 @@
   }
 }
 
+body:has(.widget-background) {
+  background-color: rgba(0, 0, 0, 0) !important;
+  margin: 0 auto !important;
+  overflow: hidden !important;
+}
+
 img {
   user-select: none;
   -webkit-user-select: none;
