@@ -32,7 +32,7 @@ const HeroFloatingOptions = () => {
   return (
     <div>
       <motion.div
-        className="h-[270px] w-full max-w-[414px] rounded-2xl absolute top-60 left-30"
+        className="rounded-2xl absolute lg:top-60 xl:left-30 left-0 top-30 transition-all"
         initial={{ y: 0, x: 0 }}
         animate={{
           y: [0, 3, 0, -2, 0.5],
@@ -55,7 +55,7 @@ const HeroFloatingOptions = () => {
       </motion.div>
 
       <motion.div
-        className="h-[270px] w-full max-w-[450px] rounded-2xl absolute top-30 right-20"
+        className="h-[270px] w-full max-w-[450px] rounded-2xl absolute lg:top-30 xl:right-20 right-0 top-80 transition-all sm:inline-block hidden"
         initial={{ y: 0, x: 0 }}
         animate={{
           y: [0, -3, 0, 3, 0],
