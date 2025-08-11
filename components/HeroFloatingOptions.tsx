@@ -31,20 +31,7 @@ const HeroFloatingOptions = () => {
 
   return (
     <div>
-      <motion.div
-        className="rounded-2xl absolute lg:top-60 xl:left-30 left-0 top-30 transition-all"
-        initial={{ y: 0, x: 0 }}
-        animate={{
-          y: [0, 3, 0, -2, 0.5],
-          x: [-1, 0, 2.2, 0, -1.5],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          repeatType: "mirror",
-          ease: "easeInOut",
-        }}
-      >
+      <div className="rounded-2xl absolute lg:top-60 xl:left-30 left-0 top-30 transition-all">
         <NowPlaying
           show_album_cover={show_album_cover}
           show_artist={show_artist}
@@ -52,22 +39,9 @@ const HeroFloatingOptions = () => {
           size={size}
           font={font}
         />
-      </motion.div>
+      </div>
 
-      <motion.div
-        className="h-[270px] w-full max-w-[450px] rounded-2xl absolute lg:top-30 xl:right-20 right-0 top-80 transition-all sm:inline-block hidden"
-        initial={{ y: 0, x: 0 }}
-        animate={{
-          y: [0, -3, 0, 3, 0],
-          x: [1, 0, -1.2, 0, 2],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          repeatType: "mirror",
-          ease: "easeInOut",
-        }}
-      >
+      <div className="h-[270px] w-full max-w-[450px] rounded-2xl absolute lg:top-30 xl:right-20 right-0 top-80 transition-all sm:inline-block hidden">
         <motion.div
           className="px-[2rem] pt-6 pb-4 bg-background/80 backdrop-blur-md border border-accent rounded-2xl shadow-2xl"
           initial={{ opacity: 0, y: 20 }}
@@ -138,7 +112,7 @@ const HeroFloatingOptions = () => {
             </div>
           </div>
         </motion.div>
-      </motion.div>
+      </div>
     </div>
   );
 };
