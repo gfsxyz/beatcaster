@@ -248,7 +248,7 @@ const Overview = () => {
               {show_album_cover && (
                 <div className="flex items-center gap-3">
                   <Image
-                    src="https://upload.wikimedia.org/wikipedia/id/e/e6/The_Weeknd_-_Blinding_Lights.png"
+                    src="/1975.png"
                     alt="Album Cover"
                     width={selectedSizeStyle.imageSize}
                     height={selectedSizeStyle.imageSize}

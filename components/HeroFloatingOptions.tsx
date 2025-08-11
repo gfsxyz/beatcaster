@@ -1,0 +1,145 @@
+"use client";
+
+import { motion } from "motion/react";
+import NowPlaying from "./NowPlaying";
+import { Switch } from "./ui/switch";
+import { Label } from "./ui/label";
+import { useState } from "react";
+import { FontEnum } from "@/types/types";
+import { Combobox } from "./Combobox";
+
+const HeroFloatingOptions = () => {
+  const [show_title, setShowTitle] = useState(true);
+  const [show_artist, setShowArtist] = useState(true);
+  const [show_album_cover, setShowAlbumCover] = useState(true);
+  const [size, setSize] = useState<"small" | "medium" | "large">("medium");
+  const [font, setFont] = useState<FontEnum>("default");
+
+  const OPTIONS_SIZE = [
+    { value: "small", label: "Small" },
+    { value: "medium", label: "Medium" },
+    { value: "large", label: "Large" },
+  ];
+
+  const fontOptions: FontEnum[] = ["default", "geistMono", "comicSans"];
+
+  const FONT_STYLES = fontOptions.map((font) => ({
+    value: font,
+    label:
+      font.charAt(0).toUpperCase() + font.slice(1).replace(/([A-Z])/g, " $1"),
+  }));
+
+  return (
+    <div>
+      <motion.div
+        className="h-[270px] w-full max-w-[414px] rounded-2xl absolute top-60 left-30"
+        initial={{ y: 0, x: 0 }}
+        animate={{
+          y: [0, 3, 0, -2, 0.5],
+          x: [-1, 0, 2.2, 0, -1.5],
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          repeatType: "mirror",
+          ease: "easeInOut",
+        }}
+      >
+        <NowPlaying
+          show_album_cover={show_album_cover}
+          show_artist={show_artist}
+          show_title={show_title}
+          size={size}
+          font={font}
+        />
+      </motion.div>
+
+      <motion.div
+        className="h-[270px] w-full max-w-[450px] rounded-2xl absolute top-30 right-20"
+        initial={{ y: 0, x: 0 }}
+        animate={{
+          y: [0, -3, 0, 3, 0],
+          x: [1, 0, -1.2, 0, 2],
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          repeatType: "mirror",
+          ease: "easeInOut",
+        }}
+      >
+        <motion.div
+          className="px-[2rem] pt-6 pb-4 bg-background/80 backdrop-blur-md border border-accent rounded-2xl shadow-2xl"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 1 }}
+        >
+          <div className="text-lg font-semibold">Options</div>
+          <div>
+            <div className="space-y-2">
+              <div className="flex items-center space-x-2 justify-between w-full">
+                <Label className="flex-auto py-2" htmlFor="title">
+                  Show song title
+                </Label>
+                <Switch
+                  id="title"
+                  checked={show_title}
+                  onCheckedChange={(value) => setShowTitle(Boolean(value))}
+                />
+              </div>
+              <div className="flex items-center space-x-2 justify-between w-full">
+                <Label className="flex-auto py-2" htmlFor="Artists">
+                  Artists
+                </Label>
+                <Switch
+                  id="Artists"
+                  checked={show_artist}
+                  onCheckedChange={(value) => setShowArtist(Boolean(value))}
+                />
+              </div>
+              <div className="flex items-center space-x-2 justify-between w-full">
+                <Label className="flex-auto py-2" htmlFor="AlbumCover">
+                  Album Cover
+                </Label>
+                <Switch
+                  id="AlbumCover"
+                  checked={show_album_cover}
+                  onCheckedChange={(value) => setShowAlbumCover(Boolean(value))}
+                />
+              </div>
+
+              <div className="flex gap-8">
+                <div className="space-y-2 py-4">
+                  <Label>Font Styles</Label>
+                  <Combobox
+                    options={FONT_STYLES}
+                    hideSearch
+                    value={font}
+                    onValueChange={(value) =>
+                      setFont((value as FontEnum) || font)
+                    }
+                    buttonClassName="lg:w-44"
+                  />
+                </div>
+
+                <div className="space-y-2 py-4">
+                  <Label>Size</Label>
+                  <Combobox
+                    options={OPTIONS_SIZE}
+                    hideSearch
+                    value={size}
+                    onValueChange={(value) =>
+                      setSize((value as "small" | "medium" | "large") || size)
+                    }
+                    buttonClassName="lg:w-44"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+    </div>
+  );
+};
+export default HeroFloatingOptions;

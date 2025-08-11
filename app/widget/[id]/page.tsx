@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { use } from "react";
 import MarqueeText from "@/components/MarqueeText";
 import { WidgetSettings } from "@/types/types";
