@@ -145,8 +145,9 @@ const HowItWorks = () => {
               </Highlighter>
             </CardTitle>
             <CardDescription className="text-muted opacity-65">
-              Add to OBS. With a simple copy-and-paste, you can add Beatcaster's
-              real-time display directly into your stream / recording app
+              Add to OBS. With a simple copy-and-paste, you can add
+              Beatcaster&apos;s real-time display directly into your stream /
+              recording app
             </CardDescription>
           </CardHeader>
         </Card>

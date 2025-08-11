@@ -3,6 +3,7 @@
 import { FONT_VARIABLES } from "@/lib/font_variables";
 import { FontEnum } from "@/types/types";
 import { motion } from "motion/react";
+import Image from "next/image";
 
 const Marquee = ({ text, speed = 40 }: { text: string; speed?: number }) => {
   // speed = pixels per second
@@ -82,9 +83,11 @@ export default function NowPlaying({
     >
       {/* Album Cover */}
       {show_album_cover && (
-        <img
+        <Image
           src="/1975.png"
           alt="Album Cover"
+          width={64}
+          height={64}
           className={`object-cover rounded-md`}
           style={{ width: sizeConfig.imageSize, height: sizeConfig.imageSize }}
         />

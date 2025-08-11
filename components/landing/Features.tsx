@@ -62,7 +62,7 @@ const Features = () => {
                         Beatcaster automatically detects and displays your
                         currently playing song in real time. From the moment the
                         first note hits, your audience will know exactly what
-                        you're listening to, creating a more engaging
+                        you&apos;re listening to, creating a more engaging
                         experience.
                       </p>
                     </li>
@@ -85,7 +85,7 @@ const Features = () => {
                       <p>
                         We built Beatcaster to be lightweight and efficient. It
                         runs silently in the background without impacting your
-                        computer's performance
+                        computer&apos;s performance
                       </p>
                     </li>
                   </ul>

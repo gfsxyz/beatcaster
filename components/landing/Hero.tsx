@@ -3,7 +3,6 @@ import { Highlighter } from "../magicui/highlighter";
 import SpotifyLoginButton from "../SpotifyLoginButton";
 import * as motion from "motion/react-client";
 import Image from "next/image";
-import NowPlaying from "../NowPlaying";
 import HeroFloatingOptions from "../HeroFloatingOptions";
 
 const Hero = () => {
@@ -54,7 +53,7 @@ const Hero = () => {
 
         <div
           style={{ width: "400px", height: "600px" }}
-          className="absolute top-[5.5rem] lg:-left-20 z-0 opacity-30 lg:opacity-100 filter contrast-150 brightness-50 lg:contrast-100 lg:brightness-100 transition-all -left-64"
+          className="absolute top-[5.5rem] lg:-left-20 z-0 opacity-30 lg:opacity-100 filter contrast-150 brightness-50 lg:contrast-100 lg:brightness-100 transition-all -left-64 pointer-events-none select-none"
         >
           <Image
             src="/tree1.png"
@@ -67,7 +66,7 @@ const Hero = () => {
 
         <div
           style={{ width: "400px", height: "600px" }}
-          className="absolute top-24 -right-16 z-0 hidden lg:inline-block transition-all"
+          className="absolute top-24 -right-16 z-0 hidden lg:inline-block transition-all pointer-events-none select-none"
         >
           <Image
             src="/tree2.png"

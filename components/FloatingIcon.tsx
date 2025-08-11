@@ -2,6 +2,7 @@ import Image from "next/image";
 import * as motion from "motion/react-client";
 import { ClassName } from "@/types/types";
 import { cn } from "@/lib/utils";
+import { Target, TargetAndTransition, Transition } from "motion/react";
 
 const FloatingIcon = ({
   src,
@@ -19,10 +20,10 @@ const FloatingIcon = ({
   alt?: string;
   ContainerClassName?: ClassName<HTMLDivElement>;
   ImageClassName?: ClassName<HTMLImageElement>;
-  initial?: {};
-  animate?: {};
-  transition?: {};
-  style?: {};
+  initial?: Target;
+  animate?: TargetAndTransition;
+  transition?: Transition;
+  style?: React.CSSProperties;
 }) => {
   return (
     <motion.div
@@ -35,6 +36,7 @@ const FloatingIcon = ({
         duration: 2,
         ...transition,
       }}
+      style={style}
     >
       <Image
         src={src}

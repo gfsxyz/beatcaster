@@ -43,8 +43,8 @@ const CTA = () => {
                 &nbsp; your video?
               </h2>
               <p>
-                Add a dynamic "Now Playing" display to your live streams and
-                video recordings
+                Add a dynamic &quot;Now Playing&quot; display to your live
+                streams and video recordings
               </p>
             </div>
             <SpotifyLoginButton

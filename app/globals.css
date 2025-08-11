@@ -115,3 +115,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+img {
+  user-select: none;
+  -webkit-user-select: none;
+}
