@@ -32,6 +32,7 @@ export function UserNav({ user }: { user: User }) {
                 : "User profile picture"
             }
             fill
+            sizes="40"
             className="rounded-full ring-2 border-2 border-transparent ring-primary"
           />
         </Button>
