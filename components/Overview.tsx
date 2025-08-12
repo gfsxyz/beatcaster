@@ -234,6 +234,7 @@ const Overview = () => {
             height="360"
             className="w-96 h-96 object-cover rounded-lg shadow-sm ring-2 ring-muted-foreground border-2 border-transparent"
             src={selectedGameData.image}
+            priority
           />
           {/* Music Player Overlay */}
           <div
