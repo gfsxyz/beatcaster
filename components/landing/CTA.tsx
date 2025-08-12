@@ -25,7 +25,7 @@ const CTA = () => {
           <div className="flex flex-col gap-4 items-center justify-center py-20">
             <div className="py-4 px-[18px] rounded-full bg-primary w-fit">
               <Image
-                src={"/logo-light.svg"}
+                src={"/svg/logo-light.svg"}
                 alt="beatcaster logo"
                 width={24}
                 height={28}

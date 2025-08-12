@@ -22,7 +22,7 @@ export async function Navbar() {
                 height: 32,
               }}
             >
-              <Image src={"/logo.svg"} alt="Beatcaster Logo" fill />
+              <Image src={"/svg/logo.svg"} alt="Beatcaster Logo" fill />
             </div>
             <span
               className={
