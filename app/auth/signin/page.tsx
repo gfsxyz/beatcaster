@@ -57,7 +57,7 @@ function SignInContent() {
         <div className="space-y-16 w-full max-w-80 z-50">
           <div className="flex items-center gap-2">
             <Image
-              src="/logo.svg"
+              src="/svg/logo.svg"
               alt="beatcaster logo"
               width={28}
               height={28}

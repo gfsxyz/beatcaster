@@ -11,7 +11,7 @@ const LoadingPageFallback = () => {
           }}
         >
           <Image
-            src={"/logo-light.svg"}
+            src={"/svg/logo-light.svg"}
             alt="Beatcaster Logo loading state"
             fill
           />
