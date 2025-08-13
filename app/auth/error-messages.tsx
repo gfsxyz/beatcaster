@@ -35,10 +35,10 @@ export default function ErrorMessage() {
       </div>
       <div className="text-9xl">🙏</div>
       <p className="max-w-[46rem] mx-auto text-muted-foreground">
-        If you're seeing this, it means Spotify still hasn't granted us
-        production API access. We're currently using a&nbsp;&nbsp;
+        If you&apos;re seeing this, it means Spotify still hasn&apos;t granted
+        us production API access. We&apos;re currently using a&nbsp;&nbsp;
         <Highlighter>limited</Highlighter> &nbsp;&nbsp;API with a max of 25
-        users. Let us know if you'd like to be&nbsp;&nbsp;
+        users. Let us know if you&apos;d like to be&nbsp;&nbsp;
         <Highlighter color="oklch(0.8952 0.0504 146.0366)">
           whitelisted!
         </Highlighter>

@@ -6,6 +6,8 @@ import ErrorMessage from "../error-messages";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
+import LoadingPageFallback from "@/components/LoadingPageFallback";
 
 const errorMessages: Record<string, string> = {
   OAuthCallback:
@@ -15,7 +17,7 @@ const errorMessages: Record<string, string> = {
   Default: "Something went wrong. Please try again.",
 };
 
-export default function SignInPage() {
+function SignInContent() {
   const searchParams = useSearchParams();
   const error = searchParams.get("error");
   const errorMessage = error
@@ -90,5 +92,13 @@ export default function SignInPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense fallback={<LoadingPageFallback />}>
+      <SignInContent />
+    </Suspense>
   );
 }
