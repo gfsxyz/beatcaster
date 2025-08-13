@@ -4,29 +4,7 @@ import { FONT_VARIABLES } from "@/lib/font_variables";
 import { FontEnum } from "@/types/types";
 import { motion } from "motion/react";
 import Image from "next/image";
-
-const Marquee = ({ text, speed = 40 }: { text: string; speed?: number }) => {
-  // speed = pixels per second
-  const textLength = text.length;
-  const duration = (textLength * 8) / speed; // adjust for smoothness
-
-  return (
-    <div className="overflow-hidden whitespace-nowrap w-full text-backround">
-      <motion.div
-        className="inline-flex"
-        animate={{ x: ["0%", "-50%"] }}
-        transition={{
-          duration,
-          repeat: Infinity,
-          ease: "linear",
-        }}
-      >
-        <span className="px-2">{text}</span>
-        <span className="px-2">{text}</span>
-      </motion.div>
-    </div>
-  );
-};
+import MarqueeText from "./MarqueeText";
 
 const sizeStyles = {
   small: {
@@ -107,7 +85,7 @@ export default function NowPlaying({
             className={`${sizeConfig.title}`}
             style={{ fontFamily: `var(${FONT_VARIABLES[font]})` }}
           >
-            <Marquee text={songTitle} speed={12} />
+            <MarqueeText text={songTitle} speed={12} />
           </div>
         )}
         {show_artist && (

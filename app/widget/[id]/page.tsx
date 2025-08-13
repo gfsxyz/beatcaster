@@ -130,7 +130,7 @@ export default function Widget({
                 justifyContent: "center",
                 gap: "0.75rem",
                 textShadow:
-                  "0px 1px 1px var(--tw-text-shadow-color, rgb(0 0 0 / 0.1)), 0px 1px 2px var(--tw-text-shadow-color, rgb(0 0 0 / 0.1)), 0px 2px 4px var(--tw-text-shadow-color, rgb(0 0 0 / 0.1))",
+                  "0px 1px 1px rgba(0, 0, 0, 0.6), 0px 2px 4px rgba(0, 0, 0, 0.6)",
               }}
             >
               {widgetSettings.show_title && (
@@ -145,13 +145,7 @@ export default function Widget({
                     WebkitFontSmoothing: "antialiased",
                   }}
                 >
-                  {data.item.name.length > 15 ? (
-                    <MarqueeText duration={data.item.name.length * 0.45}>
-                      {data.item.name}
-                    </MarqueeText>
-                  ) : (
-                    data.item.name
-                  )}
+                  <MarqueeText text={data.item.name} maxTextWidth={550} />
                 </motion.div>
               )}
               {widgetSettings.show_artist && (
@@ -162,23 +156,14 @@ export default function Widget({
                   transition={{ duration: 0.3, delay: 0.2 }}
                   style={{
                     fontSize: "2.25rem",
-                    color: "#d1d5dc", //gray 300
+                    color: "#e5e7eb", //gray 200
                     WebkitFontSmoothing: "antialiased",
                   }}
                 >
-                  {data.item.artists.map((a) => a.name).join(", ").length >
-                  15 ? (
-                    <MarqueeText
-                      duration={
-                        data.item.artists.map((a) => a.name).join(", ").length *
-                        0.25
-                      }
-                    >
-                      {data.item.artists.map((a) => a.name).join(", ")}
-                    </MarqueeText>
-                  ) : (
-                    data.item.artists.map((a) => a.name).join(", ")
-                  )}
+                  <MarqueeText
+                    text={data.item.artists.map((a) => a.name).join(", ")}
+                    maxTextWidth={550}
+                  />
                 </motion.div>
               )}
             </div>
