@@ -3,6 +3,8 @@
 import { signIn } from "next-auth/react";
 import { Button } from "./ui/button";
 import { InteractiveHoverButton } from "./magicui/arrow-button";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const SpotifyLoginButton = ({
   label = "Signin with Spotify",
@@ -17,12 +19,13 @@ const SpotifyLoginButton = ({
   variant?: "default" | "outline" | "ghost" | "link";
   arrow?: boolean;
 }) => {
+  const router = useRouter();
   if (arrow) {
     return (
       <InteractiveHoverButton
         className={className}
         type="submit"
-        onClick={() => signIn("spotify", { callbackUrl: "/dashboard" })}
+        onClick={() => router.push("/auth/signin")}
       >
         {label}
       </InteractiveHoverButton>
@@ -34,9 +37,9 @@ const SpotifyLoginButton = ({
       className={className}
       type="submit"
       variant={variant}
-      onClick={() => signIn("spotify", { callbackUrl: "/dashboard" })}
+      asChild
     >
-      {label}
+      <Link href="/auth/signin">{label}</Link>
     </Button>
   );
 };
