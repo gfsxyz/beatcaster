@@ -54,8 +54,13 @@ export default function ErrorMessage() {
         </Button>
         <Button asChild className="bg-black hover:bg-black/80" size={"sm"}>
           <a href={"https://x.com/gfsxyz"}>
-            <Image src={"/x-logo.svg"} width={12} height={12} alt="x logo" />X /
-            Twitter
+            <Image
+              src={"/svg/x-logo.svg"}
+              width={12}
+              height={12}
+              alt="x logo"
+            />
+            X / Twitter
           </a>
         </Button>
         <Button asChild size={"sm"}>

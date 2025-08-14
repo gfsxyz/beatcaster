@@ -56,7 +56,7 @@ const Nav = () => {
               height: isScrolled ? "24px" : "32px",
             }}
           >
-            <Image src={"/logo.svg"} alt="Beatcaster Logo" fill />
+            <Image src={"/svg/logo.svg"} alt="Beatcaster Logo" fill />
           </div>
           <span
             className={cn(

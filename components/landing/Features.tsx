@@ -31,7 +31,7 @@ const Features = () => {
               <div className="flex flex-col items-center justify-center gap-2 mx-auto">
                 <h2 className="text-sm font-medium text-primary">Features</h2>
                 <div className="text-2xl font-semibold">
-                  Elevate Your Content
+                  Turn Up Your Stream
                 </div>
               </div>
               <div className="w-full min-h-[372px] bg-background rounded-2xl flex gap-4 relative">

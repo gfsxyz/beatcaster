@@ -98,14 +98,17 @@ const Hero = () => {
             }}
           >
             <video
-              src="/preview-video.mp4"
               className="w-full h-full object-cover"
               autoPlay
               muted
               loop
               playsInline
               preload="metadata"
-            />
+            >
+              <source src="/videos/hero.mp4" type="video/mp4" />
+              <source src="/videos/hero.webm" type="video/webm" />
+              Your browser does not support the video tag.
+            </video>
 
             {/* Overlay color */}
             <div className="absolute inset-0 bg-foreground/30 mix-blend-multiply" />
