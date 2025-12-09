@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
       new URL("https://i.scdn.co/image/**"),
     ],
   },
+  output: "standalone",
 };
 
 export default nextConfig;
