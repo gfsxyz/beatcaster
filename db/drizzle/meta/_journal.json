@@ -5,57 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1752902055381,
-      "tag": "0000_strong_ego",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1753232392286,
-      "tag": "0001_thick_masque",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1753232512622,
-      "tag": "0002_optimal_hemingway",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1754318115218,
-      "tag": "0003_smooth_machine_man",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1754318270659,
-      "tag": "0004_glossy_wrecker",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "7",
-      "when": 1754406577240,
-      "tag": "0005_boring_sage",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "7",
-      "when": 1754532087406,
-      "tag": "0006_brainy_jean_grey",
-      "breakpoints": true
-    },
-    {
-      "idx": 7,
-      "version": "7",
-      "when": 1754583283255,
-      "tag": "0007_massive_nemesis",
+      "when": 1765257944304,
+      "tag": "0000_striped_puppet_master",
       "breakpoints": true
     }
   ]
