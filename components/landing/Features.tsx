@@ -1,5 +1,23 @@
-import { Separator } from "../ui/separator";
 import Image from "next/image";
+import InView from "./InView";
+
+const featureItems = [
+  {
+    title: "Never Miss a Beat, Real-Time Sync",
+    description:
+      "Beatcaster automatically detects and displays your currently playing song in real time. From the moment the first note hits, your audience will know exactly what you're listening to, creating a more engaging experience.",
+  },
+  {
+    title: "Seamless Integration",
+    description:
+      "Get up and running in minutes. Our app integrates effortlessly with your favorite streaming software, including OBS Studio and Streamlabs.",
+  },
+  {
+    title: "Lightweight",
+    description:
+      "We built Beatcaster to be lightweight and efficient. It runs silently in the background without impacting your computer's performance.",
+  },
+];
 
 const Features = () => {
   return (
@@ -17,7 +35,7 @@ const Features = () => {
           <div className="absolute -right-96 xl:-right-5 opacity-0 xl:opacity-100 hidden xl:inline-block -bottom-2 w-54 h-64 z-10 transition-all">
             <Image
               src={"/stone.png"}
-              alt="stone decoration"
+              alt=""
               fill
               sizes="220"
               className="object-contain [mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_80%,rgba(0,0,0,0)_100%)] [mask-repeat:no-repeat] [mask-size:cover] [--webkit-mask-image:linear-gradient(to_bottom,rgba(0,0,0,1)_80%,rgba(0,0,0,0)_100%)] [--webkit-mask-repeat:no-repeat] [--webkit-mask-size:cover]"
@@ -26,15 +44,19 @@ const Features = () => {
           <div className="w-full max-w-6xl border-x mx-auto">
             <section
               id="features"
+              aria-labelledby="features-title"
               className="pt-16 pb-20 mx-auto space-y-10 xl:px-0 px-4"
             >
-              <div className="flex flex-col items-center justify-center gap-2 mx-auto">
-                <h2 className="text-sm font-medium text-primary">Features</h2>
-                <div className="text-2xl font-semibold">
+              <InView
+                className="flex flex-col items-center justify-center gap-2 mx-auto"
+                delay={0.05}
+              >
+                <p className="text-sm font-medium text-primary">Features</p>
+                <h2 id="features-title" className="text-2xl font-semibold">
                   Turn Up Your Stream
-                </div>
-              </div>
-              <div className="w-full min-h-[372px] bg-background rounded-2xl flex gap-4 relative">
+                </h2>
+              </InView>
+              <div className="w-full min-h-[372px] bg-background rounded-2xl flex md:flex-row flex-col gap-4 relative">
                 <div
                   className="absolute inset-0 z-0 opacity-15 rounded-2xl"
                   style={{
@@ -43,51 +65,38 @@ const Features = () => {
                     backgroundSize: "20px 20px",
                   }}
                 />
-                <div className="rounded-2xl flex-1/4 md:flex-1/2 relative">
+                <InView
+                  className="rounded-2xl flex-1/4 md:flex-1/2 relative min-h-[280px] md:min-h-[372px]"
+                  delay={0.12}
+                  distance={48}
+                >
                   <Image
                     src="/features-illustration.png"
-                    alt="Features image"
+                    alt="Beatcaster widget preview inside a streaming setup"
                     fill
                     className="object-cover rounded-2xl shadow-2xl filter contrast-125 brightness-75"
                     sizes="566.66px"
                   />
-                </div>
+                </InView>
                 <div className="flex-3/4 md:flex-1/2 p-6 text-sm text-muted-foreground font-medium flex flex-col items-center justify-center">
                   <ul className="space-y-4">
-                    <li>
-                      <h3 className="font-extrabold text-foreground text-base pb-2">
-                        Never Miss a Beat, Real-Time Sync
-                      </h3>
-                      <p>
-                        Beatcaster automatically detects and displays your
-                        currently playing song in real time. From the moment the
-                        first note hits, your audience will know exactly what
-                        you&apos;re listening to, creating a more engaging
-                        experience.
-                      </p>
-                    </li>
-                    <Separator />
-                    <li>
-                      <h3 className="font-extrabold text-foreground text-base pb-2">
-                        Seamless Integration
-                      </h3>
-                      <p>
-                        Get up and running in minutes. Our app integrates
-                        effortlessly with your favorite streaming software,
-                        including OBS Studio and Streamlabs
-                      </p>
-                    </li>
-                    <Separator />
-                    <li>
-                      <h3 className="font-extrabold text-foreground text-base pb-2">
-                        Lightweight
-                      </h3>
-                      <p>
-                        We built Beatcaster to be lightweight and efficient. It
-                        runs silently in the background without impacting your
-                        computer&apos;s performance
-                      </p>
-                    </li>
+                    {featureItems.map((feature, index) => (
+                      <li
+                        key={feature.title}
+                        className={
+                          index < featureItems.length - 1
+                            ? "border-b border-border/70 pb-4"
+                            : ""
+                        }
+                      >
+                        <InView delay={0.2 + index * 0.08}>
+                          <h3 className="font-extrabold text-foreground text-base pb-2">
+                            {feature.title}
+                          </h3>
+                          <p>{feature.description}</p>
+                        </InView>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>

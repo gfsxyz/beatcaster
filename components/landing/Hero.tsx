@@ -1,19 +1,21 @@
 import FloatingIcon from "../FloatingIcon";
 import { Highlighter } from "../magicui/highlighter";
-import SpotifyLoginButton from "../SpotifyLoginButton";
-import * as motion from "motion/react-client";
 import Image from "next/image";
 import HeroFloatingOptions from "../HeroFloatingOptions";
+import InView from "./InView";
+import LandingSignInButton from "./LandingSignInButton";
 
 const Hero = () => {
   return (
     <>
       <section
         id="hero"
+        aria-labelledby="hero-title"
         className="border-b relative 2xl:overflow-visible overflow-hidden"
       >
         <FloatingIcon
           src="/spotify.png"
+          alt=""
           ContainerClassName="top-80 -left-[10rem] lg:left-34 opacity-0 lg:opacity-100 transition-all"
           style={{
             transformOrigin: "top center", // pivot from the stem
@@ -35,20 +37,24 @@ const Hero = () => {
           }}
         />
         <div className="flex flex-col items-center justify-center gap-8 text-center pt-48 mb-40 z-10 relative">
-          <h1 className="text-6xl font-bold text-foreground">
-            Connect Your{" "}
+          <h1 id="hero-title" className="text-6xl font-bold text-foreground">
+            Connect Your&nbsp;
             <Highlighter action="box" color="oklch(0.5234 0.1347 144.1672)">
-              <div className="text-primary">Beats</div>
+              <span className="text-primary">Beats</span>
             </Highlighter>
             <br />
             to Your Audience
           </h1>
-          <p className="text-muted-foreground">
-            Seamlessly integrate your current song into your
-            <br /> favorite streaming and recording apps with&nbsp;
-            <span className="text-primary">Beatcaster</span>.
-          </p>
-          <SpotifyLoginButton label="Get Started" arrow />
+          <InView delay={0.15} amount={0.6}>
+            <p className="text-muted-foreground">
+              Seamlessly integrate your current song into your
+              <br /> favorite streaming and recording apps with&nbsp;
+              <span className="text-primary">Beatcaster</span>.
+            </p>
+          </InView>
+          <InView delay={0.25} amount={0.6}>
+            <LandingSignInButton label="Get Started" arrow />
+          </InView>
         </div>
 
         <div
@@ -57,7 +63,7 @@ const Hero = () => {
         >
           <Image
             src="/tree1.png"
-            alt="tree"
+            alt=""
             fill
             style={{ objectFit: "contain" }}
             sizes="300"
@@ -70,7 +76,7 @@ const Hero = () => {
         >
           <Image
             src="/tree2.png"
-            alt="tree"
+            alt=""
             fill
             style={{ objectFit: "contain" }}
             sizes="300"
@@ -80,6 +86,7 @@ const Hero = () => {
 
       <section
         id="hero-video"
+        aria-label="Beatcaster live preview"
         style={{
           backgroundImage:
             "radial-gradient(circle at 2px 2px, rgba(0, 0, 0, 0.35) 1px, transparent 0)",
@@ -88,14 +95,11 @@ const Hero = () => {
         className="relative"
       >
         <div className="w-full max-w-[56rem] mx-auto h-[502px] border-x lg:px-0 px-4">
-          <motion.div
+          <InView
             className="bg-foreground rounded-2xl h-full overflow-hidden pointer-events-none select-none relative"
-            initial={{ y: 100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{
-              duration: 0.5,
-              ease: "easeInOut",
-            }}
+            delay={0.12}
+            distance={80}
+            amount={0.35}
           >
             <video
               className="w-full h-full object-cover"
@@ -112,7 +116,7 @@ const Hero = () => {
 
             {/* Overlay color */}
             <div className="absolute inset-0 bg-foreground/30 mix-blend-multiply" />
-          </motion.div>
+          </InView>
         </div>
 
         <HeroFloatingOptions />
